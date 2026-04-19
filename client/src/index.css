@@ -1,0 +1,462 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== BASE STYLES ===== */
+@layer base {
+  :root {
+    --color-primary: 99 102 241;
+    --color-accent: 139 92 246;
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-cosmic: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    --gradient-neon: linear-gradient(135deg, #12c2e9, #c471ed, #f64f59);
+  }
+
+  * {
+    @apply border-slate-200 dark:border-white/10 transition-colors duration-300;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
+  }
+
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 3px;
+  }
+  *::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.6); }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-dark-900 dark:text-white font-sans antialiased transition-colors duration-300;
+    min-height: 100vh;
+  }
+  
+  .dark body {
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+  }
+
+  h1, h2, h3 { @apply font-display; }
+}
+
+/* ===== COMPONENT LAYER ===== */
+@layer components {
+
+  /* ---- Glassmorphism Card ---- */
+  .glass-card {
+    @apply relative rounded-2xl border border-white/10;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl pointer-events-none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 100%);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.5),
+      0 0 30px rgba(139, 92, 246, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+  }
+
+  /* ---- Neumorphism Elements ---- */
+  .neu-card {
+    background: #111827;
+    border-radius: 16px;
+    box-shadow:
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 8px rgba(255, 255, 255, 0.03);
+  }
+
+  /* ---- Gradient Text ---- */
+  .gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #c471ed 50%, #12c2e9 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 5s ease infinite;
+  }
+
+  .gradient-text-gold {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24, #f59e0b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ---- Buttons ---- */
+  .btn-primary {
+    @apply relative px-6 py-2.5 rounded-xl font-semibold text-sm overflow-hidden transition-all duration-300;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6);
+  }
+
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-ghost {
+    @apply px-4 py-2 rounded-xl text-sm font-medium text-white/70 border border-white/10 transition-all duration-200;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .btn-ghost:hover {
+    @apply text-white border-white/20;
+    background: rgba(255,255,255,0.07);
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #f87171;
+  }
+
+  .btn-danger:hover {
+    background: rgba(239, 68, 68, 0.25);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+  }
+
+  /* ---- Input Fields ---- */
+  .input-glass {
+    @apply w-full px-4 py-3 rounded-xl text-sm text-white outline-none transition-all duration-200;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  .input-glass::placeholder { color: rgba(255,255,255,0.3); }
+
+  .input-glass:focus {
+    border-color: rgba(99, 102, 241, 0.5);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  }
+
+  /* ---- Priority Badges ---- */
+  .badge-critical {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .badge-high {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+  }
+
+  .badge-medium {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .badge-low {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* ---- Progress Bar ---- */
+  .progress-bar {
+    @apply h-1.5 rounded-full overflow-hidden;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #c471ed);
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/60 transition-all duration-200 cursor-pointer select-none;
+  }
+
+  .sidebar-item:hover {
+    @apply text-white;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .sidebar-item.active {
+    @apply text-white;
+    background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15));
+    border: 1px solid rgba(99,102,241,0.3);
+    box-shadow: 0 0 20px rgba(99,102,241,0.1);
+  }
+
+  /* ---- Stat Cards ---- */
+  .stat-card {
+    @apply glass-card p-5 flex flex-col gap-3;
+  }
+
+  /* ---- Section Headers ---- */
+  .section-header {
+    @apply flex items-center justify-between mb-6;
+  }
+
+  .section-title {
+    @apply text-xl font-display font-bold text-white;
+  }
+
+  /* ---- Glow Effects ---- */
+  .glow-purple { box-shadow: 0 0 30px rgba(139,92,246,0.4); }
+  .glow-cyan { box-shadow: 0 0 30px rgba(0,212,255,0.4); }
+  .glow-emerald { box-shadow: 0 0 30px rgba(16,185,129,0.4); }
+
+  /* ---- Score Ring ---- */
+  .score-ring {
+    @apply relative flex items-center justify-center;
+  }
+
+  /* ---- Modal Overlay ---- */
+  .modal-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    background: rgba(6, 9, 24, 0.8);
+    backdrop-filter: blur(8px);
+  }
+
+  .modal-content {
+    @apply glass-card w-full max-w-lg p-6 relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 40px rgba(99,102,241,0.15);
+  }
+
+  /* ---- Loading Skeleton ---- */
+  .skeleton {
+    @apply rounded-xl;
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.04) 25%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* ---- Chart Container ---- */
+  .chart-container {
+    @apply glass-card p-5;
+  }
+
+  /* ---- Notification Dot ---- */
+  .notification-dot {
+    @apply absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center text-xs;
+    background: linear-gradient(135deg, #f64f59, #c471ed);
+    font-size: 9px;
+  }
+
+  /* ---- Score Grade ---- */
+  .grade-s { color: #FFD700; text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+  .grade-a { color: #00D4AA; }
+  .grade-b { color: #4FACFE; }
+  .grade-c { color: #F7971E; }
+  .grade-d { color: #FF6B6B; }
+  .grade-f { color: #FF0000; }
+}
+
+/* ===== UTILITIES ===== */
+@layer utilities {
+  .text-gradient { @apply gradient-text; }
+  .clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Page transitions */
+  .page-enter {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .page-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* ===== CUSTOM ANIMATIONS ===== */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.3); }
+  50% { box-shadow: 0 0 40px rgba(99,102,241,0.7), 0 0 80px rgba(139,92,246,0.3); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* ===== CAREER ODYSSEY ===== */
+
+/* ── 3D Button Lift Effect ── */
+.btn-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-3d:hover {
+  transform: perspective(600px) translateZ(18px) translateY(-3px);
+  box-shadow:
+    0 20px 50px rgba(99, 102, 241, 0.45),
+    0 0 0 1px rgba(139, 92, 246, 0.35);
+}
+
+.btn-3d:active {
+  transform: perspective(600px) translateZ(6px) translateY(-1px);
+}
+
+/* ── Page Layout ── */
+.career-odyssey-root {
+  position: fixed;
+  inset: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  @apply bg-slate-100 dark:bg-[#090b1a] transition-colors duration-500;
+  scrollbar-width: none;
+}
+
+.career-odyssey-root::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Sticky Canvas Wrapper ── */
+.canvas-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  pointer-events: none; /* Let clicks pass through empty areas */
+}
+
+.canvas-sticky-wrapper > * {
+  pointer-events: auto; /* Re-enable clicks on children (Canvas, TopBar, etc) */
+}
+
+/* ── Top Overlay Bar ── */
+.canvas-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: linear-gradient(180deg, rgba(9,11,26,0.9) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.canvas-top-bar > * {
+  pointer-events: auto;
+}
+
+/* ── Scroll Progress Bar ── */
+.scroll-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  height: 2px;
+  background: rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+
+.scroll-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #c471ed, #f59e0b);
+  transform-origin: left;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ── Milestone Unlock Toast ── */
+.milestone-toast {
+  position: absolute;
+  bottom: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 20px;
+  pointer-events: none;
+  background: rgba(9,11,26,0.9);
+  border: 1px solid rgba(139,92,246,0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(139,92,246,0.2);
+  white-space: nowrap;
+}
+
+/* ── Scroll Hint ── */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* ── HUD Panel base (pointer events passthrough for canvas) ── */
+.fixed {
+  pointer-events: auto;
+}
+
+/* Recharts overrides */
+.recharts-tooltip-wrapper { outline: none !important; }
+.recharts-default-tooltip {
+  background: rgba(13, 17, 23, 0.95) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(20px) !important;
+}
